@@ -1,7 +1,7 @@
 # WebProgrammingProject
 final web programming project for CSCI 3000
 --------------------------------------------
-RQUIERMENTS*********************************
+RQUIERMENTS
 --------------------------------------------
 Instructions:
 
