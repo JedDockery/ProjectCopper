@@ -1,30 +1,20 @@
 <!doctype html>
+
 <!--Create a Web Application/Site with the following:
-
 Project should be on a separate sub-domain
-
 Responsive Break Points
 - Desktop: > 1024
 - Tablet: 1024 to 400
 - Mobile: < 400
-
 Have at least two (2) forms on the site (properly validated/collected into a DB)
-
 Have a page to search for results from the form entries that uses AJAX to either auto-complete search text fields or query the data for display
-
 Implement two (2) different API implementations included in your site
-
 This project is designed to pull together everything we have learned during the semester
-
 You should be able to re-use a good bit of material from your Labs/Projects/Midterm, but you should still set aside plenty of time to work on this
-
 You can use PHP/MySQL, Python/SQLite, or C#.NET/MSSQL to complete this project
-
 Submit a link to your site and a zip file containing the entire site. If using MySQL or MSSQL, include an export of the DB structure. If using SQLite, include the SQLite database file.
 -->
-<?php
-	include 'project.jeddockery.com/dbh.php'
-?>
+
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -37,10 +27,14 @@ Submit a link to your site and a zip file containing the entire site. If using M
 	<body>
 		<?php
 			// define variables and set to empty values
-			$nameErr = $emailErr = $genderErr = $websiteErr = "";
-			$name = $email = $gender = $comment = $website = $citizen = "";
-
+			$nameErr = $emailErr = "";
+			$name = $email = "";
+		
+		
+			
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				
+				//name
 				if (empty($_POST["name"])) {
 					$nameErr = "Name is required";
 				} 
@@ -51,10 +45,10 @@ Submit a link to your site and a zip file containing the entire site. If using M
 						$nameErr = "Only letters and white space allowed"; 
 					}
 				}
-
+			//email
 				if (empty($_POST["email"])) {
 					$emailErr = "Email is required";
-				} 
+				}
 				else {
 					$email = test_input($_POST["email"]);
 					// check if e-mail address is well-formed
@@ -62,46 +56,54 @@ Submit a link to your site and a zip file containing the entire site. If using M
 						$emailErr = "Invalid email format"; 
 					}
 				}
-
-				if (empty($_POST["website"])) {
-					$website = "";
-				} 
-				else {
-					$website = test_input($_POST["website"]);
-					// check if URL address syntax is valid (this regular expression also allows dashes in the URL)
-					if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
-						$websiteErr = "Invalid URL"; 
-					}
-				}
-
-				if (empty($_POST["citizen"])) {
-					$citizen = "";
-				} 
-				else {
-					$citizen = test_input($_POST["citizen"]);
-				}
-
-				if (empty($_POST["comment"])) {
-					$comment = "";
-				} 
-				else {
-					$comment = test_input($_POST["comment"]);
-				}
-
-				if (empty($_POST["gender"])) {
-					$genderErr = "Gender is required";
-				} 
-				else {
-					$gender = test_input($_POST["gender"]);
-				}
 			}
-
+				
 			function test_input($data) {
 				$data = trim($data);
 				$data = stripslashes($data);
 				$data = htmlspecialchars($data);
 				return $data;
 			}
+			
+
+
+			//sql section
+			$servername = "50.62.209.47";
+			$username = "jeddockery";
+			$password = "^4kuJ1x4";
+			$dbname = "jeddockery";
+
+			try {
+				//connect to db
+				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+				// set the PDO error mode to exception
+				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				
+				//query from DB
+				$sql = "select firstname from MyGuests;";
+				
+				//array initalize
+				$result = mysql_query($conn, $sql);
+				$data = array();
+				
+				//if a row was effected, pull data and push to array data[]
+				if(mysql_num_rows($result)>0){
+					while($row = mysql_fetch_assoc($result)){
+						$data[] = $row;
+					}
+				}
+				print_r($data);
+				
+				//close connection
+				$conn = null;
+				
+				
+			}
+			catch(PDOException $e){
+				echo "Connection failed: " . $e->getMessage();
+			}
+		
+			
 		?>
 
 		<h2>Survey</h2>
@@ -113,24 +115,7 @@ Submit a link to your site and a zip file containing the entire site. If using M
 			E-mail: <input type="text" name="email" value="<?php echo $email;?>">
 			<span class="error">* <?php echo $emailErr;?></span>
 			<br><br>
-			Website: <input type="text" name="website" value="<?php echo $website;?>">
-			<span class="error"><?php echo $websiteErr;?></span>
-			<br><br>
-
-
-			Are you a Citizen:<select name="citizen">
-			<option value="yes">yes</option>
-			<option value="no">no</option>
-			</select>
-			<br><br>
-
-			Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
-			<br><br>
-			Gender:
-			<input type="radio" name="gender" <?php if (isset($gender) && $gender=="female") echo "checked";?> value="female">Female
-			<input type="radio" name="gender" <?php if (isset($gender) && $gender=="male") echo "checked";?> value="male">Male
-			<input type="radio" name="gender" <?php if (isset($gender) && $gender=="other") echo "checked";?> value="other">Other  
-			<span class="error">* <?php echo $genderErr;?></span>
+			
 			<br><br>
 			<input type="submit" name="submit" value="Submit">  
 		</form>
@@ -141,45 +126,8 @@ Submit a link to your site and a zip file containing the entire site. If using M
 			echo "<br>";
 			echo "E-mail: ".$email;
 			echo "<br>";
-			echo "Website ".$website;
-			echo "<br>";
-			echo "Is Citizen? ".$citizen;
-			echo "<br>";
-			echo "Your comment: ".$comment;
-			echo "<br>";
-			echo "Choosen gender: ".$gender;
 		?>
 	</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
