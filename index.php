@@ -68,10 +68,10 @@ Submit a link to your site and a zip file containing the entire site. If using M
 
 
 			//sql section
-			$servername = "50.62.209.47";
-			$username = "jeddockery";
-			$password = "^4kuJ1x4";
-			$dbname = "jeddockery";
+			$servername = "servername";
+			$username = "username";
+			$password = "password";
+			$dbname = "name";
 
 			try {
 				//connect to db
