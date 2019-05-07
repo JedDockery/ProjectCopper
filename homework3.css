@@ -1,0 +1,74 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body {
+	background-color:azure;
+}
+
+p {
+	color:black;
+	text-align: center;
+	font-size: 20px;
+}
+div{
+	border:medium;
+}
+hr{
+	border-top: 1px solid red;
+}
+
+
+
+/* styleing for header of page*/
+.header{
+	padding-top: 10%;
+	text-align: center;
+	background: #f44292;
+	color: white;
+	font-size: 20px;
+}
+/* styleing for footer of page*/
+.footer {
+	float: right;
+
+	text-align: center;
+	background-color: dimgray;
+	color: white;
+	font-size: 20px;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
