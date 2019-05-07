@@ -1,5 +1,5 @@
 # WebProgrammingProject
-final web programming project for CSCI 3000
+final web programming project
 --------------------------------------------
 RQUIERMENTS
 --------------------------------------------
@@ -27,7 +27,3 @@ You should be able to re-use a good bit of material from your Labs/Projects/Midt
 You can use PHP/MySQL, Python/SQLite, or C#.NET/MSSQL to complete this project
 
 Submit a link to your site and a zip file containing the entire site. If using MySQL or MSSQL, include an export of the DB structure. If using SQLite, include the SQLite database file.
-
-
-Due Date	
-May 3, 2019 5:30 PM
